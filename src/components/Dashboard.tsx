@@ -102,10 +102,10 @@ const Dashboard = () => {
       {/* Refresh Button */}
       <div className="flex justify-between items-center">
         <div>
-          <h2 className="text-2xl font-bold text-foreground">Live Field Data</h2>
+          <h2 className="text-xl font-bold text-foreground">Live Field Data</h2>
           <p className="text-sm text-muted-foreground">Real-time sensor readings from your forest-green field</p>
         </div>
-        <Button onClick={refreshData} disabled={refreshing} className="gap-2">
+        <Button onClick={refreshData} disabled={refreshing} variant="ghost" size="sm" className="gap-2">
           <RefreshCw className={`h-4 w-4 ${refreshing ? 'animate-spin' : ''}`} />
           Refresh
         </Button>
@@ -115,7 +115,7 @@ const Dashboard = () => {
         <>
           {/* NPK Values */}
           <div className="grid gap-2 md:grid-cols-3">
-            <Card className="border-l-4 border-l-primary">
+            <Card>
               <CardHeader className="pb-1">
                 <CardTitle className="flex items-center gap-2 text-base">
                   <Leaf className="h-4 w-4 text-primary" />
@@ -130,7 +130,7 @@ const Dashboard = () => {
               </CardContent>
             </Card>
 
-            <Card className="border-l-4 border-l-secondary">
+            <Card>
               <CardHeader className="pb-1">
                 <CardTitle className="flex items-center gap-2 text-base">
                   <Leaf className="h-4 w-4 text-secondary" />
@@ -145,7 +145,7 @@ const Dashboard = () => {
               </CardContent>
             </Card>
 
-            <Card className="border-l-4 border-l-dark-earth-green">
+            <Card>
               <CardHeader className="pb-1">
                 <CardTitle className="flex items-center gap-2 text-base">
                   <Leaf className="h-4 w-4 text-dark-earth-green" />
