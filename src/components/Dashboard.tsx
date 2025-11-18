@@ -114,9 +114,9 @@ const Dashboard = () => {
       {latestReading ? (
         <>
           {/* NPK Values */}
-          <div className="grid gap-4 md:grid-cols-3">
+          <div className="grid gap-2 md:grid-cols-3">
             <Card className="border-l-4 border-l-primary">
-              <CardHeader className="pb-2">
+              <CardHeader className="pb-1">
                 <CardTitle className="flex items-center gap-2 text-base">
                   <Leaf className="h-4 w-4 text-primary" />
                   Nitrogen (N)
@@ -131,7 +131,7 @@ const Dashboard = () => {
             </Card>
 
             <Card className="border-l-4 border-l-secondary">
-              <CardHeader className="pb-2">
+              <CardHeader className="pb-1">
                 <CardTitle className="flex items-center gap-2 text-base">
                   <Leaf className="h-4 w-4 text-secondary" />
                   Phosphorus (P)
@@ -146,7 +146,7 @@ const Dashboard = () => {
             </Card>
 
             <Card className="border-l-4 border-l-dark-earth-green">
-              <CardHeader className="pb-2">
+              <CardHeader className="pb-1">
                 <CardTitle className="flex items-center gap-2 text-base">
                   <Leaf className="h-4 w-4 text-dark-earth-green" />
                   Potassium (K)
@@ -162,9 +162,9 @@ const Dashboard = () => {
           </div>
 
           {/* Environmental Conditions */}
-          <div className="grid gap-4 md:grid-cols-3">
+          <div className="grid gap-2 md:grid-cols-3">
             <Card>
-              <CardHeader className="pb-2">
+              <CardHeader className="pb-1">
                 <CardTitle className="flex items-center gap-2 text-base">
                   <Droplets className="h-4 w-4 text-sky-blue" />
                   Soil Moisture
@@ -179,7 +179,7 @@ const Dashboard = () => {
             </Card>
 
             <Card>
-              <CardHeader className="pb-2">
+              <CardHeader className="pb-1">
                 <CardTitle className="flex items-center gap-2 text-base">
                   <Thermometer className="h-4 w-4 text-red-500" />
                   Temperature
@@ -191,7 +191,7 @@ const Dashboard = () => {
             </Card>
 
             <Card>
-              <CardHeader className="pb-2">
+              <CardHeader className="pb-1">
                 <CardTitle className="flex items-center gap-2 text-base">
                   <Wind className="h-4 w-4 text-blue-500" />
                   Humidity
@@ -205,7 +205,7 @@ const Dashboard = () => {
 
           {/* Last Updated */}
           <Card className="bg-muted">
-            <CardContent className="pt-6">
+            <CardContent className="py-3">
               <div className="flex items-center justify-between">
                 <span className="text-sm text-muted-foreground">Last updated</span>
                 <span className="text-sm font-medium">
