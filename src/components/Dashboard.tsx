@@ -103,7 +103,7 @@ const Dashboard = () => {
       <div className="flex justify-between items-center">
         <div>
           <h2 className="text-3xl font-bold text-foreground">Live Field Data</h2>
-          <p className="text-muted-foreground">Real-time sensor readings from your saffron field</p>
+          <p className="text-muted-foreground">Real-time sensor readings from your forest-green field</p>
         </div>
         <Button onClick={refreshData} disabled={refreshing} className="gap-2">
           <RefreshCw className={`h-4 w-4 ${refreshing ? 'animate-spin' : ''}`} />
@@ -145,10 +145,10 @@ const Dashboard = () => {
               </CardContent>
             </Card>
 
-            <Card className="border-l-4 border-l-earth-green">
+            <Card className="border-l-4 border-l-dark-earth-green">
               <CardHeader className="pb-2">
                 <CardTitle className="flex items-center gap-2 text-lg">
-                  <Leaf className="h-5 w-5 text-earth-green" />
+                  <Leaf className="h-5 w-5 text-dark-earth-green" />
                   Potassium (K)
                 </CardTitle>
               </CardHeader>

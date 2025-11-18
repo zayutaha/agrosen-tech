@@ -8,7 +8,15 @@ import HealthScore from "@/components/HealthScore";
 import AlertsPanel from "@/components/AlertsPanel";
 import Chatbot from "@/components/Chatbot";
 import FeedbackForm from "@/components/FeedbackForm";
-import { Sprout, Activity, Leaf, MessageSquare, Bell, ClipboardList, TrendingUp } from "lucide-react";
+import {
+  Sprout,
+  Activity,
+  Leaf,
+  MessageSquare,
+  Bell,
+  ClipboardList,
+  TrendingUp,
+} from "lucide-react";
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState("dashboard");
@@ -19,12 +27,14 @@ const Index = () => {
       <header className="sticky top-0 z-50 border-b border-border bg-card shadow-sm">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center gap-3">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-saffron to-primary shadow-md">
-              <Sprout className="h-6 w-6 text-white" />
-            </div>
+                        <img src="/logo.jpg" alt="Agrosentech Logo" className="h-12 rounded-xl" />
             <div>
-              <h1 className="text-2xl font-bold text-foreground">Saffron Monitor</h1>
-              <p className="text-sm text-muted-foreground">Real-time Field Intelligence</p>
+              <h1 className="text-2xl font-bold text-foreground">
+                Saffron Monitor
+              </h1>
+              <p className="text-sm text-muted-foreground">
+                Real-time Field Intelligence
+              </p>
             </div>
           </div>
         </div>
@@ -32,7 +42,11 @@ const Index = () => {
 
       {/* Main Content */}
       <main className="container mx-auto px-4 py-6">
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+        <Tabs
+          value={activeTab}
+          onValueChange={setActiveTab}
+          className="space-y-6"
+        >
           {/* Tab Navigation */}
           <TabsList className="grid w-full grid-cols-4 md:grid-cols-7 gap-2 bg-card p-2 h-auto">
             <TabsTrigger value="dashboard" className="flex flex-col gap-1 py-3">

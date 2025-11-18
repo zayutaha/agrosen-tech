@@ -51,15 +51,15 @@ const HealthScore = () => {
   const getScoreColor = (score: number) => {
     if (score >= 80) return 'text-secondary';
     if (score >= 60) return 'text-primary';
-    if (score >= 40) return 'text-saffron';
+    if (score >= 40) return 'text-forest-green';
     return 'text-destructive';
   };
 
   const getScoreGradient = (score: number) => {
-    if (score >= 80) return 'from-secondary to-earth-green';
-    if (score >= 60) return 'from-primary to-saffron';
-    if (score >= 40) return 'from-saffron to-primary';
-    return 'from-destructive to-saffron';
+    if (score >= 80) return 'from-secondary to-dark-earth-green';
+    if (score >= 60) return 'from-primary to-forest-green';
+    if (score >= 40) return 'from-forest-green to-primary';
+    return 'from-destructive to-forest-green';
   };
 
   const getScoreBadge = (score: number) => {

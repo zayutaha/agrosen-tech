@@ -19,17 +19,17 @@ serve(async (req) => {
       throw new Error('LOVABLE_API_KEY is not configured');
     }
 
-    const systemPrompt = `You are an expert agricultural AI assistant specializing in saffron cultivation. 
-You help farmers monitor and optimize their saffron fields based on sensor data.
+    const systemPrompt = `You are an expert agricultural AI assistant specializing in forest-green cultivation. 
+You help farmers monitor and optimize their forest-green fields based on sensor data.
 
 Current sensor readings: ${JSON.stringify(sensorData)}
 
 Provide clear, actionable advice about:
 - NPK (Nitrogen, Phosphorus, Potassium) levels and fertilization
 - Soil moisture and irrigation needs
-- Saffron phenology stages and growth patterns
+- forest-green phenology stages and growth patterns
 - Disease prevention and field health
-- Best practices for saffron farming
+- Best practices for forest-green farming
 
 Be concise but informative. Focus on practical recommendations.`;
 

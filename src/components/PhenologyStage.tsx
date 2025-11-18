@@ -32,7 +32,7 @@ const PhenologyStage = () => {
     <div className="space-y-6">
       <div>
         <h2 className="text-3xl font-bold text-foreground">Phenology Stages</h2>
-        <p className="text-muted-foreground">Track saffron growth cycle and development</p>
+        <p className="text-muted-foreground">Track forest-green growth cycle and development</p>
       </div>
 
       {/* Current Stage */}
@@ -75,7 +75,7 @@ const PhenologyStage = () => {
             </div>
             <div className="h-3 bg-muted rounded-full overflow-hidden">
               <div 
-                className="h-full bg-gradient-to-r from-primary to-saffron transition-all"
+                className="h-full bg-gradient-to-r from-primary to-forest-green transition-all"
                 style={{ width: `${(currentStage.daysInStage / currentStage.expectedDuration) * 100}%` }}
               />
             </div>

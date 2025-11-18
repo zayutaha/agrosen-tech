@@ -204,7 +204,7 @@ const NutritionPlanner = () => {
         <CardHeader>
           <div className="flex items-center justify-between">
             <CardTitle className="flex items-center gap-2">
-              <Leaf className="h-5 w-5 text-earth-green" />
+              <Leaf className="h-5 w-5 text-dark-earth-green" />
               Potassium (K) - Current: {latestReading.potassium}
             </CardTitle>
             <Badge variant={potassiumRec.status === 'optimal' ? 'secondary' : 'destructive'}>
@@ -214,7 +214,7 @@ const NutritionPlanner = () => {
         </CardHeader>
         <CardContent className="space-y-3">
           <div className="flex items-start gap-2">
-            <AlertCircle className="h-5 w-5 text-earth-green mt-0.5" />
+            <AlertCircle className="h-5 w-5 text-dark-earth-green mt-0.5" />
             <p className="font-medium">{potassiumRec.message}</p>
           </div>
           <div className="bg-accent/50 p-4 rounded-lg space-y-2">
@@ -228,7 +228,7 @@ const NutritionPlanner = () => {
       {/* General Tips */}
       <Card className="bg-primary/5 border-primary">
         <CardHeader>
-          <CardTitle className="text-lg">Saffron Fertilization Best Practices</CardTitle>
+          <CardTitle className="text-lg">forest-green Fertilization Best Practices</CardTitle>
         </CardHeader>
         <CardContent>
           <ul className="space-y-2 text-sm">

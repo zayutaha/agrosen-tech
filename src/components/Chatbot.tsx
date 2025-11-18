@@ -7,7 +7,7 @@ import { Send, Bot, User, Activity } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 interface Message {
-  role: 'user' | 'assistant';
+  role: "user" | "assistant";
   content: string;
   timestamp: Date;
 }
@@ -15,32 +15,32 @@ interface Message {
 const Chatbot = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
-      role: 'assistant',
-      content: 'Hello! I\'m your AI saffron farming assistant. I can help you with questions about NPK levels, irrigation, phenology stages, disease prevention, and best practices for saffron cultivation. How can I help you today?',
-      timestamp: new Date()
-    }
+      role: "assistant",
+      content:
+        "Hello! I'm your AI forest-green farming assistant. I can help you with questions about NPK levels, irrigation, phenology stages, disease prevention, and best practices for forest-green cultivation. How can I help you today?",
+      timestamp: new Date(),
+    },
   ]);
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [sensorData, setSensorData] = useState<any>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
 
   useEffect(() => {
-    // Fetch latest sensor data for context
     const fetchSensorData = async () => {
       try {
         const { data, error } = await supabase
-          .from('sensor_readings')
-          .select('*')
-          .order('created_at', { ascending: false })
+          .from("sensor_readings")
+          .select("*")
+          .order("created_at", { ascending: false })
           .limit(1)
           .single();
 
         if (error) throw error;
         setSensorData(data);
       } catch (error) {
-        console.error('Error fetching sensor data:', error);
+        console.error("Error fetching sensor data:", error);
       }
     };
 
@@ -48,45 +48,45 @@ const Chatbot = () => {
   }, []);
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
   const handleSend = async () => {
     if (!input.trim()) return;
 
     const userMessage: Message = {
-      role: 'user',
+      role: "user",
       content: input,
-      timestamp: new Date()
+      timestamp: new Date(),
     };
 
-    setMessages(prev => [...prev, userMessage]);
-    setInput('');
+    setMessages((prev) => [...prev, userMessage]);
+    setInput("");
     setLoading(true);
 
     try {
-      const { data, error } = await supabase.functions.invoke('chatbot', {
+      const { data, error } = await supabase.functions.invoke("chatbot", {
         body: {
           message: input,
-          sensorData: sensorData || {}
-        }
+          sensorData: sensorData || {},
+        },
       });
 
       if (error) throw error;
 
       const assistantMessage: Message = {
-        role: 'assistant',
+        role: "assistant",
         content: data.response,
-        timestamp: new Date()
+        timestamp: new Date(),
       };
 
-      setMessages(prev => [...prev, assistantMessage]);
+      setMessages((prev) => [...prev, assistantMessage]);
     } catch (error) {
-      console.error('Chatbot error:', error);
+      console.error("Chatbot error:", error);
       toast({
         title: "Error",
         description: "Failed to get response. Please try again.",
-        variant: "destructive"
+        variant: "destructive",
       });
     } finally {
       setLoading(false);
@@ -94,7 +94,7 @@ const Chatbot = () => {
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       handleSend();
     }
@@ -103,8 +103,12 @@ const Chatbot = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-3xl font-bold text-foreground">AI Farming Assistant</h2>
-        <p className="text-muted-foreground">Ask questions about saffron cultivation and field management</p>
+        <h2 className="text-3xl font-bold text-foreground">
+          AI Farming Assistant
+        </h2>
+        <p className="text-muted-foreground">
+          Ask questions about forest-green cultivation and field management
+        </p>
       </div>
 
       <Card className="h-[600px] flex flex-col">
@@ -119,19 +123,19 @@ const Chatbot = () => {
           {messages.map((message, idx) => (
             <div
               key={idx}
-              className={`flex gap-3 ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
+              className={`flex gap-3 ${message.role === "user" ? "justify-end" : "justify-start"}`}
             >
-              {message.role === 'assistant' && (
+              {message.role === "assistant" && (
                 <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 flex-shrink-0">
                   <Bot className="h-4 w-4 text-primary" />
                 </div>
               )}
-              
+
               <div
                 className={`max-w-[80%] rounded-2xl px-4 py-3 ${
-                  message.role === 'user'
-                    ? 'bg-primary text-primary-foreground'
-                    : 'bg-muted text-foreground'
+                  message.role === "user"
+                    ? "bg-primary text-primary-foreground"
+                    : "bg-muted text-foreground"
                 }`}
               >
                 <p className="text-sm whitespace-pre-wrap">{message.content}</p>
@@ -140,7 +144,7 @@ const Chatbot = () => {
                 </p>
               </div>
 
-              {message.role === 'user' && (
+              {message.role === "user" && (
                 <div className="flex h-8 w-8 items-center justify-center rounded-full bg-secondary/20 flex-shrink-0">
                   <User className="h-4 w-4 text-secondary" />
                 </div>
@@ -192,12 +196,12 @@ const Chatbot = () => {
         <CardContent>
           <div className="grid gap-2 md:grid-cols-2">
             {[
-              "What are the optimal NPK levels for saffron?",
-              "How often should I irrigate my saffron field?",
-              "What are the main phenology stages of saffron?",
-              "How can I prevent diseases in saffron cultivation?",
-              "When is the best time to harvest saffron?",
-              "What are the signs of nutrient deficiency?"
+              "What are the optimal NPK levels for forest-green?",
+              "How often should I irrigate my forest-green field?",
+              "What are the main phenology stages of forest-green?",
+              "How can I prevent diseases in forest-green cultivation?",
+              "When is the best time to harvest forest-green?",
+              "What are the signs of nutrient deficiency?",
             ].map((question, idx) => (
               <Button
                 key={idx}

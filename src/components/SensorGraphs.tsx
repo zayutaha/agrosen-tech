@@ -66,7 +66,7 @@ const SensorGraphs = () => {
                   <Legend />
                   <Line type="monotone" dataKey="nitrogen" stroke="hsl(var(--primary))" name="Nitrogen" />
                   <Line type="monotone" dataKey="phosphorus" stroke="hsl(var(--secondary))" name="Phosphorus" />
-                  <Line type="monotone" dataKey="potassium" stroke="hsl(var(--earth-green))" name="Potassium" />
+                  <Line type="monotone" dataKey="potassium" stroke="hsl(var(--dark-earth-green))" name="Potassium" />
                 </LineChart>
               </ResponsiveContainer>
             </CardContent>

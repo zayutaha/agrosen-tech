@@ -8,7 +8,7 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Saffron field monitoring theme - earthy agriculture colors */
+    /* forest-green field monitoring theme - earthy agriculture colors */
     --background: 45 30% 96%;
     --foreground: 25 35% 15%;
 
@@ -18,8 +18,8 @@ All colors MUST be HSL.
     --popover: 0 0% 100%;
     --popover-foreground: 25 35% 15%;
 
-    /* Saffron gold as primary */
-    --primary: 38 92% 50%;
+    /* forest-green gold as primary */
+    --primary: 145 63% 49%;
     --primary-foreground: 0 0% 100%;
 
     /* Earth green for secondary */
@@ -38,24 +38,24 @@ All colors MUST be HSL.
 
     --border: 45 20% 85%;
     --input: 45 20% 90%;
-    --ring: 38 92% 50%;
+    --ring: 145 63% 49%;
 
     --radius: 0.75rem;
     
-    /* Custom saffron theme colors */
-    --saffron: 38 92% 50%;
+    /* Custom forest-green theme colors */
+    --forest-green: 145 63% 49%;
     --earth-green: 145 35% 45%;
     --soil-brown: 25 45% 35%;
     --sky-blue: 200 85% 65%;
     
     /* Gradients */
-    --gradient-saffron: linear-gradient(135deg, hsl(38 92% 50%), hsl(45 95% 60%));
+    --gradient-forest-green: linear-gradient(135deg, hsl(145 63% 49%), hsl(145 55% 55%));
     --gradient-earth: linear-gradient(180deg, hsl(145 35% 45%), hsl(145 40% 35%));
     
     /* Shadows */
     --shadow-sm: 0 2px 8px hsl(25 35% 15% / 0.08);
     --shadow-md: 0 4px 16px hsl(25 35% 15% / 0.12);
-    --shadow-glow: 0 0 24px hsl(38 92% 50% / 0.3);
+    --shadow-glow: 0 0 24px hsl(145 63% 49% / 0.3);
 
     --radius: 0.75rem;
 
@@ -86,7 +86,7 @@ All colors MUST be HSL.
     --popover: 25 20% 12%;
     --popover-foreground: 45 20% 92%;
 
-    --primary: 38 92% 50%;
+    --primary: 145 63% 49%;
     --primary-foreground: 0 0% 100%;
 
     --secondary: 145 30% 35%;
@@ -103,7 +103,7 @@ All colors MUST be HSL.
 
     --border: 25 15% 20%;
     --input: 25 15% 20%;
-    --ring: 38 92% 50%;
+    --ring: 145 63% 49%;
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;

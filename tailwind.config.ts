@@ -2,7 +2,12 @@ import type { Config } from "tailwindcss";
 
 export default {
   darkMode: ["class"],
-  content: ["./pages/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./app/**/*.{ts,tsx}", "./src/**/*.{ts,tsx}"],
+  content: [
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
+  ],
   prefix: "",
   theme: {
     container: {
@@ -47,10 +52,14 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        saffron: "hsl(var(--saffron))",
-        "earth-green": "hsl(var(--earth-green))",
-        "soil-brown": "hsl(var(--soil-brown))",
-        "sky-blue": "hsl(var(--sky-blue))",
+        // --- CUSTOM COLOR CHANGES ---
+        // Changed "forest-green" (green) to "forest-green"
+        "forest-green": "hsl(var(--forest-green))",
+        // Changed "dark-earth-green" to "dark-dark-earth-green" (kept green but made it a different shade)
+        "dark-dark-earth-green": "hsl(var(--dark-dark-earth-green))",
+        // Changed "mint-green" (light green) to "mint-green"
+        "mint-green": "hsl(var(--mint-green))",
+        "sky-blue": "hsl(var(--sky-blue))", // Kept this as is
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
@@ -61,6 +70,7 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        // -----------------------------
       },
       borderRadius: {
         lg: "var(--radius)",
