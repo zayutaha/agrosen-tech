@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { supabase } from "@/integrations/supabase/client";
-import { Droplets, Leaf, Activity, RefreshCw } from "lucide-react";
+import { Droplets, Leaf, Activity, RefreshCw, Thermometer, Wind } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 
@@ -98,12 +98,12 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       {/* Refresh Button */}
       <div className="flex justify-between items-center">
         <div>
-          <h2 className="text-3xl font-bold text-foreground">Live Field Data</h2>
-          <p className="text-muted-foreground">Real-time sensor readings from your forest-green field</p>
+          <h2 className="text-2xl font-bold text-foreground">Live Field Data</h2>
+          <p className="text-sm text-muted-foreground">Real-time sensor readings from your forest-green field</p>
         </div>
         <Button onClick={refreshData} disabled={refreshing} className="gap-2">
           <RefreshCw className={`h-4 w-4 ${refreshing ? 'animate-spin' : ''}`} />
@@ -117,14 +117,14 @@ const Dashboard = () => {
           <div className="grid gap-4 md:grid-cols-3">
             <Card className="border-l-4 border-l-primary">
               <CardHeader className="pb-2">
-                <CardTitle className="flex items-center gap-2 text-lg">
-                  <Leaf className="h-5 w-5 text-primary" />
+                <CardTitle className="flex items-center gap-2 text-base">
+                  <Leaf className="h-4 w-4 text-primary" />
                   Nitrogen (N)
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-4xl font-bold text-foreground">{latestReading.nitrogen}</div>
-                <Badge variant={latestReading.nitrogen < 20 ? "destructive" : "secondary"} className="mt-2">
+                <div className="text-3xl font-bold text-foreground">{latestReading.nitrogen}</div>
+                <Badge variant={latestReading.nitrogen < 20 ? "destructive" : "secondary"} className="mt-1 text-xs">
                   {latestReading.nitrogen < 20 ? "Low" : latestReading.nitrogen > 200 ? "High" : "Optimal"}
                 </Badge>
               </CardContent>
@@ -132,14 +132,14 @@ const Dashboard = () => {
 
             <Card className="border-l-4 border-l-secondary">
               <CardHeader className="pb-2">
-                <CardTitle className="flex items-center gap-2 text-lg">
-                  <Leaf className="h-5 w-5 text-secondary" />
+                <CardTitle className="flex items-center gap-2 text-base">
+                  <Leaf className="h-4 w-4 text-secondary" />
                   Phosphorus (P)
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-4xl font-bold text-foreground">{latestReading.phosphorus}</div>
-                <Badge variant={latestReading.phosphorus < 10 ? "destructive" : "secondary"} className="mt-2">
+                <div className="text-3xl font-bold text-foreground">{latestReading.phosphorus}</div>
+                <Badge variant={latestReading.phosphorus < 10 ? "destructive" : "secondary"} className="mt-1 text-xs">
                   {latestReading.phosphorus < 10 ? "Low" : latestReading.phosphorus > 200 ? "High" : "Optimal"}
                 </Badge>
               </CardContent>
@@ -147,14 +147,14 @@ const Dashboard = () => {
 
             <Card className="border-l-4 border-l-dark-earth-green">
               <CardHeader className="pb-2">
-                <CardTitle className="flex items-center gap-2 text-lg">
-                  <Leaf className="h-5 w-5 text-dark-earth-green" />
+                <CardTitle className="flex items-center gap-2 text-base">
+                  <Leaf className="h-4 w-4 text-dark-earth-green" />
                   Potassium (K)
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-4xl font-bold text-foreground">{latestReading.potassium}</div>
-                <Badge variant={latestReading.potassium < 10 ? "destructive" : "secondary"} className="mt-2">
+                <div className="text-3xl font-bold text-foreground">{latestReading.potassium}</div>
+                <Badge variant={latestReading.potassium < 10 ? "destructive" : "secondary"} className="mt-1 text-xs">
                   {latestReading.potassium < 10 ? "Low" : latestReading.potassium > 200 ? "High" : "Optimal"}
                 </Badge>
               </CardContent>
@@ -165,14 +165,14 @@ const Dashboard = () => {
           <div className="grid gap-4 md:grid-cols-3">
             <Card>
               <CardHeader className="pb-2">
-                <CardTitle className="flex items-center gap-2 text-lg">
-                  <Droplets className="h-5 w-5 text-sky-blue" />
+                <CardTitle className="flex items-center gap-2 text-base">
+                  <Droplets className="h-4 w-4 text-sky-blue" />
                   Soil Moisture
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-4xl font-bold text-foreground">{latestReading.moisture}</div>
-                <Badge variant={latestReading.moisture < 500 ? "destructive" : "secondary"} className="mt-2">
+                <div className="text-3xl font-bold text-foreground">{latestReading.moisture}</div>
+                <Badge variant={latestReading.moisture < 500 ? "destructive" : "secondary"} className="mt-1 text-xs">
                   {latestReading.moisture < 500 ? "Needs Water" : "Good"}
                 </Badge>
               </CardContent>
@@ -180,21 +180,25 @@ const Dashboard = () => {
 
             <Card>
               <CardHeader className="pb-2">
-                <CardTitle className="text-lg">Temperature</CardTitle>
+                <CardTitle className="flex items-center gap-2 text-base">
+                  <Thermometer className="h-4 w-4 text-red-500" />
+                  Temperature
+                </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-4xl font-bold text-foreground">{latestReading.temperature}°C</div>
-                <p className="text-sm text-muted-foreground mt-2">Ambient temperature</p>
+                <div className="text-3xl font-bold text-foreground">{latestReading.temperature}°C</div>
               </CardContent>
             </Card>
 
             <Card>
               <CardHeader className="pb-2">
-                <CardTitle className="text-lg">Humidity</CardTitle>
+                <CardTitle className="flex items-center gap-2 text-base">
+                  <Wind className="h-4 w-4 text-blue-500" />
+                  Humidity
+                </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-4xl font-bold text-foreground">{latestReading.humidity}%</div>
-                <p className="text-sm text-muted-foreground mt-2">Relative humidity</p>
+                <div className="text-3xl font-bold text-foreground">{latestReading.humidity}%</div>
               </CardContent>
             </Card>
           </div>
