@@ -23,23 +23,11 @@ const ElectricalConductivity = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchLatestEC = async () => {
-      try {
-        const { data, error } = await supabase
-          .from("sensor_readings")
-          .select("electrical_conductivity, created_at")
-          .order("created_at", { ascending: false })
-          .limit(1)
-          .single();
-        if (error) throw error;
-        setLatestEC(data);
-      } catch (error) {
-        console.error("Error fetching EC data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchLatestEC();
+    // Set dummy data for preview
+    setTimeout(() => {
+      setLatestEC({ electrical_conductivity: 1.2, created_at: new Date().toISOString() });
+      setLoading(false);
+    }, 500);
   }, []);
 
   if (loading) {

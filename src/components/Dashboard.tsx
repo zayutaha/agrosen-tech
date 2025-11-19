@@ -175,7 +175,6 @@ const Dashboard = () => {
       {/* Health Score Card on Top */}
       <HealthScore />
       {/* Electrical Conductivity Card */}
-      <ElectricalConductivity />
       {/* Refresh Button */}
       <div className="flex justify-between items-center">
         <div>
@@ -197,7 +196,6 @@ const Dashboard = () => {
 
       {latestReading ? (
         <>
-          {/* NPK Values */}
           <div className="grid gap-2 md:grid-cols-3">
             <Card>
               <CardHeader className="pb-1">
@@ -499,6 +497,7 @@ const Dashboard = () => {
                 </Badge>
               </CardContent>
             </Card>
+            <ElectricalConductivity />
           </div>
         </>
       ) : (
