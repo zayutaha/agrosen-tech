@@ -7,9 +7,7 @@ import NutritionPlanner from "@/components/NutritionPlanner";
 import HealthScore from "@/components/HealthScore";
 import AlertsPanel from "@/components/AlertsPanel";
 import Chatbot from "@/components/Chatbot";
-import FeedbackForm from "@/components/FeedbackForm";
 import {
-  Sprout,
   Activity,
   Leaf,
   MessageSquare,
@@ -26,16 +24,12 @@ const Index = () => {
       {/* Header */}
       <header className="sticky top-0 z-50 border-b border-border bg-card shadow-sm">
         <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center gap-3">
-                        <img src="/logo.jpg" alt="Agrosentech Logo" className="h-12 rounded-xl" />
-            <div>
-              <h1 className="text-2xl font-bold text-foreground">
-                Saffron Monitor
-              </h1>
-              <p className="text-sm text-muted-foreground">
-                Real-time Field Intelligence
-              </p>
-            </div>
+          <div className="flex items-center gap-3 w-full justify-center">
+            <img
+              src="/logo.jpg"
+              alt="Agrosentech Logo"
+              className="h-12 rounded-xl"
+            />
           </div>
         </div>
       </header>
@@ -108,11 +102,6 @@ const Index = () => {
             <Chatbot />
           </TabsContent>
         </Tabs>
-
-        {/* Feedback Section */}
-        <div className="mt-8">
-          <FeedbackForm />
-        </div>
       </main>
     </div>
   );

@@ -187,34 +187,6 @@ const Chatbot = () => {
           </div>
         </div>
       </Card>
-
-      {/* Suggested Questions */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-lg">Suggested Questions</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid gap-2 md:grid-cols-2">
-            {[
-              "What are the optimal NPK levels for forest-green?",
-              "How often should I irrigate my forest-green field?",
-              "What are the main phenology stages of forest-green?",
-              "How can I prevent diseases in forest-green cultivation?",
-              "When is the best time to harvest forest-green?",
-              "What are the signs of nutrient deficiency?",
-            ].map((question, idx) => (
-              <Button
-                key={idx}
-                variant="outline"
-                className="justify-start text-left h-auto py-3 px-4 whitespace-normal"
-                onClick={() => setInput(question)}
-              >
-                {question}
-              </Button>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
     </div>
   );
 };
