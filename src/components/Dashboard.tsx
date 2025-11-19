@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { supabase } from "@/integrations/supabase/client";
 import HealthScore from "@/components/HealthScore";
+import ElectricalConductivity from "@/components/ElectricalConductivity";
 import {
   Droplets,
   Activity,
@@ -173,6 +174,8 @@ const Dashboard = () => {
     <div className="space-y-4">
       {/* Health Score Card on Top */}
       <HealthScore />
+      {/* Electrical Conductivity Card */}
+      <ElectricalConductivity />
       {/* Refresh Button */}
       <div className="flex justify-between items-center">
         <div>
@@ -496,20 +499,6 @@ const Dashboard = () => {
                 </Badge>
               </CardContent>
             </Card>
-          </div>
-
-          {/* Last Updated */}
-          <div className="text-right">
-            <div className="py-3">
-              <div className="flex items-center justify-end">
-                <span className="text-sm text-muted-foreground">
-                  Last updated
-                </span>
-                <span className="text-sm font-medium ml-2">
-                  {new Date(latestReading.created_at).toLocaleString()}
-                </span>
-              </div>
-            </div>
           </div>
         </>
       ) : (

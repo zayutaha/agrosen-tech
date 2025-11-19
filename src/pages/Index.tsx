@@ -14,12 +14,12 @@ import {
   Bell,
   ClipboardList,
   TrendingUp,
+  MoreHorizontal,
 } from "lucide-react";
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState("dashboard");
   const [showMore, setShowMore] = useState(false);
-  const [closing, setClosing] = useState(false);
 
   return (
     <div className="min-h-screen bg-background flex flex-col ">
@@ -34,27 +34,31 @@ const Index = () => {
           </div>
         </div>
       </header>
-      <main className="container mx-auto px-4 py-6 flex-1">
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="h-12">
-          <TabsContent value="dashboard">
+      <main className="container mx-auto px-4 pt-6 pb-28 flex-1 overflow-y-auto">
+        <Tabs
+          value={activeTab}
+          onValueChange={setActiveTab}
+          className="h-12 pb-20 "
+        >
+          <TabsContent value="dashboard" className="pb-20">
             <Dashboard />
           </TabsContent>
-          <TabsContent value="graphs">
+          <TabsContent value="graphs" className="pb-20">
             <SensorGraphs />
           </TabsContent>
-          <TabsContent value="phenology">
+          <TabsContent value="phenology" className="pb-20">
             <PhenologyStage />
           </TabsContent>
-          <TabsContent value="nutrition">
+          <TabsContent value="nutrition" className="pb-20">
             <NutritionPlanner />
           </TabsContent>
-          <TabsContent value="health">
+          <TabsContent value="health" className="pb-20">
             <HealthScore />
           </TabsContent>
-          <TabsContent value="alerts">
+          <TabsContent value="alerts" className="pb-20">
             <AlertsPanel />
           </TabsContent>
-          <TabsContent value="chatbot">
+          <TabsContent value="chatbot" className="pb-20">
             <Chatbot />
           </TabsContent>
         </Tabs>
@@ -88,49 +92,69 @@ const Index = () => {
               {/* More Menu */}
               <div className="relative">
                 <button
-                  onClick={() => {
-                    setClosing(!showMore);
-                    setShowMore((prev) => !prev);
-                  }}
-                  className="flex flex-col items-center py-2 text-xs w-full "
+                  onClick={() => setShowMore((prev) => !prev)}
+                  className={`flex flex-col items-center py-2 text-xs w-full rounded-lg transition-colors ${
+                    ["nutrition", "health", "alerts", "chatbot"].includes(
+                      activeTab,
+                    )
+                      ? "bg-gray-100"
+                      : "hover:bg-gray-50"
+                  }`}
                 >
-                  •••
+                  <MoreHorizontal className="h-4 w-4" />
+                  More
                 </button>
-
-                {(showMore || closing) && (
-                  <div
-                    className={`absolute bottom-12 left-0 right-0 bg-card border border-border shadow-xl rounded-xl p-2 flex flex-col ${showMore ? "animate-slide-up" : "animate-slide-down"}`}
+                <div
+                  className={`${showMore ? "opacity-100" : "opacity-0"} ${
+                    showMore ? "pointer-events-auto" : "pointer-events-none"
+                  } absolute bottom-full mb-2 left-1/2 -translate-x-1/2 max-w-13 bg-white border border-gray-200 shadow-xl rounded-xl p-2 transition-all duration-200`}
+                >
+                  <TabsTrigger
+                    value="nutrition"
+                    onClick={() => {
+                      setActiveTab("nutrition");
+                      setShowMore(false);
+                    }}
+                    className={`w-full py-3 px-3 text-xs flex items-center gap-2 rounded-lg transition-colors ${
+                      activeTab === "nutrition"
+                        ? "bg-gray-100"
+                        : "hover:bg-gray-50"
+                    }`}
                   >
-                    <TabsTrigger
-                      value="nutrition"
-                      onClick={() => setShowMore(false)}
-                      className="w-full py-2 text-xs flex items-center gap-2"
-                    >
-                      <ClipboardList className="h-4 w-4" /> Nutrition
-                    </TabsTrigger>
-                    <TabsTrigger
-                      value="health"
-                      onClick={() => setShowMore(false)}
-                      className="w-full py-2 text-xs flex items-center gap-2"
-                    >
-                      <Activity className="h-4 w-4" /> Health
-                    </TabsTrigger>
-                    <TabsTrigger
-                      value="alerts"
-                      onClick={() => setShowMore(false)}
-                      className="w-full py-2 text-xs flex items-center gap-2"
-                    >
-                      <Bell className="h-4 w-4" /> Alerts
-                    </TabsTrigger>
-                    <TabsTrigger
-                      value="chatbot"
-                      onClick={() => setShowMore(false)}
-                      className="w-full py-2 text-xs flex items-center gap-2"
-                    >
-                      <MessageSquare className="h-4 w-4" /> AI
-                    </TabsTrigger>
-                  </div>
-                )}
+                    <ClipboardList className="h-4 w-4 flex-shrink-0" />
+                    <span className="whitespace-nowrap">Nutrition</span>
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="alerts"
+                    onClick={() => {
+                      setActiveTab("alerts");
+                      setShowMore(false);
+                    }}
+                    className={`w-full py-3 px-3 text-xs flex items-center gap-2 rounded-lg transition-colors ${
+                      activeTab === "alerts"
+                        ? "bg-gray-100"
+                        : "hover:bg-gray-50"
+                    }`}
+                  >
+                    <Bell className="h-4 w-4 flex-shrink-0" />
+                    <span className="whitespace-nowrap">Alerts</span>
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="chatbot"
+                    onClick={() => {
+                      setActiveTab("chatbot");
+                      setShowMore(false);
+                    }}
+                    className={`w-full py-3 px-3 text-xs flex items-center gap-2 rounded-lg transition-colors ${
+                      activeTab === "chatbot"
+                        ? "bg-gray-100"
+                        : "hover:bg-gray-50"
+                    }`}
+                  >
+                    <MessageSquare className="h-4 w-4 flex-shrink-0" />
+                    <span className="whitespace-nowrap">AI</span>
+                  </TabsTrigger>
+                </div>
               </div>
             </TabsList>
           </Tabs>
