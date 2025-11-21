@@ -2,18 +2,19 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Headers":
+    "authorization, x-client-info, apikey, content-type",
 };
 
 serve(async (req) => {
-  if (req.method === 'OPTIONS') {
+  if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
-    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+    const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
+    const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
     // ThingSpeak credentials from environment
@@ -35,71 +36,73 @@ serve(async (req) => {
     const potassium = parseInt(feed.field3);
     const moisture = parseInt(feed.field4);
 
-    console.log(`N=${nitrogen}, P=${phosphorus}, K=${potassium}, Moisture=${moisture}`);
+    console.log(
+      `N=${nitrogen}, P=${phosphorus}, K=${potassium}, Moisture=${moisture}`,
+    );
 
     // Insert sensor reading
     const { error: sensorError } = await supabase
-      .from('sensor_readings')
+      .from("sensor_readings")
       .insert({
         nitrogen,
         phosphorus,
         potassium,
         moisture,
         temperature: 25.5, // Mock data - ThingSpeak doesn't provide this
-        humidity: 65.0 // Mock data
+        humidity: 65.0, // Mock data
       });
 
     if (sensorError) throw sensorError;
 
     // Generate alerts based on sensor data
     const alerts = [];
-    
+
     if (moisture < 500) {
       alerts.push({
-        type: 'irrigation',
-        message: 'Moisture LOW → Turn ON irrigation',
-        severity: 'critical'
+        type: "irrigation",
+        message: "Moisture LOW → Turn ON irrigation",
+        severity: "critical",
       });
     }
-    
+
     if (nitrogen < 20) {
       alerts.push({
-        type: 'npk',
-        message: 'Nitrogen LOW → Add Urea',
-        severity: 'warning'
+        type: "npk",
+        message: "Nitrogen LOW → Add Urea",
+        severity: "warning",
       });
     }
-    
+
     if (phosphorus < 10) {
       alerts.push({
-        type: 'npk',
-        message: 'Phosphorus LOW → Add DAP',
-        severity: 'warning'
+        type: "npk",
+        message: "Phosphorus LOW → Add DAP",
+        severity: "warning",
       });
     }
-    
+
     if (potassium < 10) {
       alerts.push({
-        type: 'npk',
-        message: 'Potassium LOW → Add Potash',
-        severity: 'warning'
+        type: "npk",
+        message: "Potassium LOW → Add Potash",
+        severity: "warning",
       });
     }
-    
+
     if (nitrogen > 200 || phosphorus > 200 || potassium > 200) {
       alerts.push({
-        type: 'npk',
-        message: 'NPK VERY HIGH → Stop fertilizing',
-        severity: 'critical'
+        type: "npk",
+        message: "NPK VERY HIGH → Stop fertilizing",
+        severity: "critical",
       });
     }
 
     // Insert alerts
     if (alerts.length > 0) {
       const { error: alertError } = await supabase
-        .from('alerts')
+        .from("alerts")
         .insert(alerts);
-      if (alertError) console.error('Alert insert error:', alertError);
+      if (alertError) console.error("Alert insert error:", alertError);
     }
 
     // Calculate health score
@@ -110,34 +113,36 @@ serve(async (req) => {
     if (potassium < 10) score -= 15;
     if (nitrogen > 200 || phosphorus > 200 || potassium > 200) score -= 25;
 
-    const { error: healthError } = await supabase
-      .from('health_scores')
-      .insert({
-        score: Math.max(0, score),
-        factors: {
-          moisture: moisture < 500 ? 'low' : 'ok',
-          nitrogen: nitrogen < 20 ? 'low' : nitrogen > 200 ? 'high' : 'ok',
-          phosphorus: phosphorus < 10 ? 'low' : phosphorus > 200 ? 'high' : 'ok',
-          potassium: potassium < 10 ? 'low' : potassium > 200 ? 'high' : 'ok'
-        }
-      });
+    const { error: healthError } = await supabase.from("health_scores").insert({
+      score: Math.max(0, score),
+      factors: {
+        moisture: moisture < 500 ? "low" : "ok",
+        nitrogen: nitrogen < 20 ? "low" : nitrogen > 200 ? "high" : "ok",
+        phosphorus: phosphorus < 10 ? "low" : phosphorus > 200 ? "high" : "ok",
+        potassium: potassium < 10 ? "low" : potassium > 200 ? "high" : "ok",
+      },
+    });
 
-    if (healthError) console.error('Health score error:', healthError);
+    if (healthError) console.error("Health score error:", healthError);
 
     return new Response(
-      JSON.stringify({ 
-        success: true, 
+      JSON.stringify({
+        success: true,
         data: { nitrogen, phosphorus, potassium, moisture },
-        alerts: alerts.length 
+        alerts: alerts.length,
       }),
-      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      { headers: { ...corsHeaders, "Content-Type": "application/json" } },
     );
-
   } catch (error) {
-    console.error('Error:', error);
+    console.error("Error:", error);
     return new Response(
-      JSON.stringify({ error: error instanceof Error ? error.message : 'Unknown error' }),
-      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      JSON.stringify({
+        error: error instanceof Error ? error.message : "Unknown error",
+      }),
+      {
+        status: 500,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      },
     );
   }
 });

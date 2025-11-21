@@ -28,8 +28,8 @@ const Index = () => {
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center gap-3 w-full justify-center">
             {/* Replaced img with div for preview safety, revert to your img tag */}
-            <div className="h-10 px-4 bg-green-600 text-white rounded-xl flex items-center font-bold shadow-sm">
-              Agrosentech
+            <div className="h-10 px-4 text-xl flex items-center font-bold ">
+              Saffron Monitor
             </div>
           </div>
         </div>

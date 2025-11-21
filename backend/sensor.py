@@ -20,3 +20,8 @@ def extract_feeds(data):
    return data["feeds"][0]
 
 
+def get_sensor_data():
+    data = requests.get(url).json()
+    return parse(data)
+
+
