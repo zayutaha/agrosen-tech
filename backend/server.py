@@ -1,3 +1,4 @@
+from season import get_days_until_next_season, get_current_season
 import requests
 from sensor import parse
 from flask import Flask, jsonify
@@ -19,6 +20,20 @@ def get_reading():
         "phosphorus": reading.phosphorus,
         "potassium": reading.potassium,
         "soil_moisture": reading.soil_moisture
+    })
+
+@app.route('/api/season')
+def get_season():
+    current = get_current_season()
+    next_season = get_days_until_next_season()
+    
+    return jsonify({
+        "current_season": current.season.value,
+        "description": current.description,
+        "care_tips": current.care_tips,
+        "next_season": next_season['season'],
+        "days_until_next": next_season['days'],
+        "next_season_date": next_season['date']
     })
 
 if __name__ == "__main__":
