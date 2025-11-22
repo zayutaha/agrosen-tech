@@ -6,6 +6,7 @@ import {
   ChevronRight,
   AlertTriangle,
 } from "lucide-react";
+import { Readings } from "./Dashboard";
 
 // ============================================================================
 // MOCKS FOR SHADCN COMPONENTS (Card, Badge) and SUPABASE/FIREBASE
@@ -79,9 +80,9 @@ const mockReading = {
 const getNPKRecommendation = (nutrient, value) => {
   // Thresholds based on typical agricultural ranges (simplified)
   const recommendations = {
-    nitrogen: { low: 20, high: 200 },
-    phosphorus: { low: 10, high: 150 },
-    potassium: { low: 10, high: 200 },
+    nitrogen: { low: 30, high: 50 },
+    phosphorus: { low: 20, high: 40 },
+    potassium: { low: 150, high: 200 },
   };
 
   const thresholds = recommendations[nutrient];
@@ -106,21 +107,21 @@ const getNPKRecommendation = (nutrient, value) => {
     isProblem: status !== "Optimal",
   };
 };
-
-const NutritionPlanner = () => {
-  const [latestReading, setLatestReading] = useState(null);
+type NutritionPlannerProps = {
+  readings: Readings;
+};
+const NutritionPlanner = ({ readings }: NutritionPlannerProps) => {
   const [loading, setLoading] = useState(true);
 
   // MOCKING DATA FETCHING using the structure from the old code
   useEffect(() => {
     // Simulate API call delay
     const simulateFetch = setTimeout(() => {
-      setLatestReading(mockReading);
       setLoading(false);
     }, 500);
 
     return () => clearTimeout(simulateFetch);
-  }, []);
+  }, [readings]);
 
   if (loading) {
     return (
@@ -131,7 +132,7 @@ const NutritionPlanner = () => {
     );
   }
 
-  if (!latestReading) {
+  if (!readings) {
     return (
       <Card>
         <CardContent className="pt-6">
@@ -145,39 +146,17 @@ const NutritionPlanner = () => {
   }
 
   // Generate data for NPK using the logic function
-  const nitrogenData = getNPKRecommendation("nitrogen", latestReading.nitrogen);
+  const nitrogenData = getNPKRecommendation("nitrogen", readings.nitrogen);
   const phosphorusData = getNPKRecommendation(
     "phosphorus",
-    latestReading.phosphorus,
+    readings.phosphorus,
   );
-  const potassiumData = getNPKRecommendation(
-    "potassium",
-    latestReading.potassium,
-  );
-
-  // Hardcoded data for other display nutrients (since no logic was provided)
-  const otherNutrients = [
-    {
-      name: "Calcium (Ca)",
-      value: `${latestReading.calcium} ppm`,
-      status: "Optimal",
-      variant: "optimal",
-      isProblem: false,
-    },
-    {
-      name: "Magnesium (Mg)",
-      value: `${latestReading.magnesium} ppm`,
-      status: "Optimal",
-      variant: "optimal",
-      isProblem: false,
-    },
-  ];
+  const potassiumData = getNPKRecommendation("potassium", readings.potassium);
 
   const nutrientList = [
     { name: "Nitrogen (N)", ...nitrogenData },
     { name: "Phosphorus (P)", ...phosphorusData },
     { name: "Potassium (K)", ...potassiumData },
-    ...otherNutrients,
   ];
 
   return (
@@ -231,7 +210,11 @@ const NutritionPlanner = () => {
                   Uses opacity-0 and pointer-events-none when no problem exists.
                 */}
                 <div
-                  className={`transition-opacity duration-150 ${item.isProblem ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+                  className={`transition-opacity duration-150 ${
+                    item.isProblem
+                      ? "opacity-100"
+                      : "opacity-0 pointer-events-none"
+                  }`}
                 >
                   <button
                     onClick={() =>
@@ -263,7 +246,7 @@ const NutritionPlanner = () => {
             Soil pH
           </div>
           <div className="text-3xl font-bold text-gray-900">
-            {latestReading.soil_ph}
+            {readings.soil_ph}
           </div>
           <div className="text-xs text-green-500 mt-1 font-medium">
             Optimal Range
@@ -274,7 +257,7 @@ const NutritionPlanner = () => {
             Moisture Level
           </div>
           <div className="text-3xl font-bold text-gray-900">
-            {latestReading.moisture}%
+            {readings.soil_moisture}%
           </div>
           <div className="text-xs text-gray-500 mt-1 font-medium">
             Adequate (Last 24h)

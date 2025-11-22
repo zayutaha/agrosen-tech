@@ -105,7 +105,7 @@ const AlertsPanel = () => {
             Field monitoring alerts and warnings
           </p>
         </div>
-        <Badge variant="destructive" className="text-lg px-4 py-2">
+        <Badge variant="destructive" className="text-lg px-4 py-2 text-center">
           {activeAlerts.length} Active
         </Badge>
       </div>

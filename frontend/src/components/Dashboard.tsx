@@ -34,7 +34,7 @@ const FIELD_CONFIG = {
     icon: FlaskRound,
     color: "#4ade80",
     min: 100,
-    max: 300,
+    max: 50,
     unit: "ppm",
     ideal: "100–300 ppm",
   },
@@ -43,7 +43,7 @@ const FIELD_CONFIG = {
     icon: AtomIcon,
     color: "#818cf8",
     min: 50,
-    max: 250,
+    max: 40,
     unit: "ppm",
     ideal: "50–250 ppm",
   },
@@ -52,7 +52,7 @@ const FIELD_CONFIG = {
     icon: Droplets,
     color: "#fbbf24",
     min: 50,
-    max: 250,
+    max: 200,
     unit: "ppm",
     ideal: "50–250 ppm",
   },
@@ -85,11 +85,22 @@ const FIELD_CONFIG = {
   },
 };
 
-const Dashboard = () => {
+export type Readings = {
+  nitrogen: number;
+  phosphorus: number;
+  potassium: number;
+  soil_moisture: number;
+};
+type DashboardProps = {
+  readings: Readings;
+};
+
+const Dashboard = ({ readings }: DashboardProps) => {
   const [latestReading, setLatestReading] = useState<SensorReading | null>(
     null,
   );
   const [loading, setLoading] = useState(true);
+  const [ranges, setRanges] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
   const { toast } = useToast();
 
@@ -101,6 +112,12 @@ const Dashboard = () => {
         .order("created_at", { ascending: false })
         .limit(1)
         .single();
+      if (readings) {
+        data.nitrogen = readings.nitrogen;
+        data.potassium = readings.potassium;
+        data.phosphorus = readings.phosphorus;
+        data.moisture = readings.soil_moisture;
+      }
 
       if (error) throw error;
       setLatestReading(data);
@@ -110,6 +127,14 @@ const Dashboard = () => {
       setLoading(false);
     }
   };
+  useEffect(() => {
+    async function fetchRanges() {
+      const res = await fetch("http://localhost:8090/api/ranges");
+
+      setRanges(await res.json());
+    }
+    fetchRanges();
+  }, []);
 
   const refreshData = async () => {
     setRefreshing(true);
@@ -216,13 +241,23 @@ const Dashboard = () => {
                   }
                   className="mt-2 h-2"
                   style={{
-                    background: `linear-gradient(to right, ${FIELD_CONFIG.nitrogen.color} ${Math.min(100, (latestReading.nitrogen / FIELD_CONFIG.nitrogen.max) * 100)}%, #f3f4f6 ${Math.min(100, (latestReading.nitrogen / FIELD_CONFIG.nitrogen.max) * 100)}%)`,
+                    background: `linear-gradient(to right, ${
+                      FIELD_CONFIG.nitrogen.color
+                    } ${Math.min(
+                      100,
+                      (latestReading.nitrogen / FIELD_CONFIG.nitrogen.max) *
+                        100,
+                    )}%, #f3f4f6 ${Math.min(
+                      100,
+                      (latestReading.nitrogen / FIELD_CONFIG.nitrogen.max) *
+                        100,
+                    )}%)`,
                   }}
                 />
 
                 {/* Ideal Range Info */}
                 <p className="text-xs text-muted-foreground mt-1">
-                  Ideal: 100–300 ppm
+                  Ideal: {ranges.nitrogen.low}–{ranges.nitrogen.high} ppm
                 </p>
 
                 {/* Status Badge with Better Labeling */}
@@ -266,13 +301,23 @@ const Dashboard = () => {
                   }
                   className="mt-2 h-2"
                   style={{
-                    background: `linear-gradient(to right, ${FIELD_CONFIG.phosphorus.color} ${Math.min(100, (latestReading.phosphorus / FIELD_CONFIG.phosphorus.max) * 100)}%, #f3f4f6 ${Math.min(100, (latestReading.phosphorus / FIELD_CONFIG.phosphorus.max) * 100)}%)`,
+                    background: `linear-gradient(to right, ${
+                      FIELD_CONFIG.phosphorus.color
+                    } ${Math.min(
+                      100,
+                      (latestReading.phosphorus / FIELD_CONFIG.phosphorus.max) *
+                        100,
+                    )}%, #f3f4f6 ${Math.min(
+                      100,
+                      (latestReading.phosphorus / FIELD_CONFIG.phosphorus.max) *
+                        100,
+                    )}%)`,
                   }}
                 />
 
                 {/* Ideal Range Info */}
                 <p className="text-xs text-muted-foreground mt-1">
-                  Ideal: 50–250 ppm
+                  Ideal: {ranges.phosphorus.low}–{ranges.phosphorus.high} ppm
                 </p>
 
                 {/* Status Badge with Better Labeling */}
@@ -315,13 +360,23 @@ const Dashboard = () => {
                   }
                   className="mt-2 h-2"
                   style={{
-                    background: `linear-gradient(to right, ${FIELD_CONFIG.potassium.color} ${Math.min(100, (latestReading.potassium / FIELD_CONFIG.potassium.max) * 100)}%, #f3f4f6 ${Math.min(100, (latestReading.potassium / FIELD_CONFIG.potassium.max) * 100)}%)`,
+                    background: `linear-gradient(to right, ${
+                      FIELD_CONFIG.potassium.color
+                    } ${Math.min(
+                      100,
+                      (latestReading.potassium / FIELD_CONFIG.potassium.max) *
+                        100,
+                    )}%, #f3f4f6 ${Math.min(
+                      100,
+                      (latestReading.potassium / FIELD_CONFIG.potassium.max) *
+                        100,
+                    )}%)`,
                   }}
                 />
 
                 {/* Ideal Range Info */}
                 <p className="text-xs text-muted-foreground mt-1">
-                  Ideal: 50–250 ppm
+                  Ideal: {ranges.potassium.low}–{ranges.potassium.high} ppm
                 </p>
 
                 {/* Status Badge with Better Labeling */}
@@ -365,7 +420,13 @@ const Dashboard = () => {
                   value={(latestReading.moisture / 1000) * 100}
                   className="mt-2 h-2"
                   style={{
-                    background: `linear-gradient(to right, #38bdf8 ${Math.min(100, (latestReading.moisture / 1000) * 100)}%, #f3f4f6 ${Math.min(100, (latestReading.moisture / 1000) * 100)}%)`,
+                    background: `linear-gradient(to right, #38bdf8 ${Math.min(
+                      100,
+                      (latestReading.moisture / 1000) * 100,
+                    )}%, #f3f4f6 ${Math.min(
+                      100,
+                      (latestReading.moisture / 1000) * 100,
+                    )}%)`,
                   }}
                 />
 
@@ -417,7 +478,19 @@ const Dashboard = () => {
                   }
                   className="mt-2 h-2"
                   style={{
-                    background: `linear-gradient(to right, ${FIELD_CONFIG.temperature.color} ${Math.min(100, (latestReading.temperature / FIELD_CONFIG.temperature.max) * 100)}%, #f3f4f6 ${Math.min(100, (latestReading.temperature / FIELD_CONFIG.temperature.max) * 100)}%)`,
+                    background: `linear-gradient(to right, ${
+                      FIELD_CONFIG.temperature.color
+                    } ${Math.min(
+                      100,
+                      (latestReading.temperature /
+                        FIELD_CONFIG.temperature.max) *
+                        100,
+                    )}%, #f3f4f6 ${Math.min(
+                      100,
+                      (latestReading.temperature /
+                        FIELD_CONFIG.temperature.max) *
+                        100,
+                    )}%)`,
                   }}
                 />
 
@@ -468,7 +541,17 @@ const Dashboard = () => {
                   }
                   className="mt-2 h-2"
                   style={{
-                    background: `linear-gradient(to right, ${FIELD_CONFIG.humidity.color} ${Math.min(100, (latestReading.humidity / FIELD_CONFIG.humidity.max) * 100)}%, #f3f4f6 ${Math.min(100, (latestReading.humidity / FIELD_CONFIG.humidity.max) * 100)}%)`,
+                    background: `linear-gradient(to right, ${
+                      FIELD_CONFIG.humidity.color
+                    } ${Math.min(
+                      100,
+                      (latestReading.humidity / FIELD_CONFIG.humidity.max) *
+                        100,
+                    )}%, #f3f4f6 ${Math.min(
+                      100,
+                      (latestReading.humidity / FIELD_CONFIG.humidity.max) *
+                        100,
+                    )}%)`,
                   }}
                 />
 

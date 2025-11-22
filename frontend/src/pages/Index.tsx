@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   Activity,
   Leaf,
@@ -21,7 +21,17 @@ import Chatbot from "@/components/Chatbot";
 const Index = () => {
   const [activeTab, setActiveTab] = useState("dashboard");
   const [showMore, setShowMore] = useState(false);
+  const [readings, setReadings] = useState();
+  React.useEffect(() => {
+    fetchReadings();
+  }, []);
 
+  const fetchReadings = async () => {
+    const response = await fetch("http://localhost:8090/api/reading").then(
+      (res) => res.json(),
+    );
+    setReadings(response);
+  };
   return (
     <div className="min-h-screen bg-background flex flex-col ">
       <header className="sticky top-0 z-50 border-b border-border bg-card shadow-sm">
@@ -46,7 +56,7 @@ const Index = () => {
            */}
           {activeTab === "dashboard" && (
             <TabsContent value="dashboard" className="pb-20">
-              <Dashboard />
+              <Dashboard readings={readings} />
             </TabsContent>
           )}
           {activeTab === "graphs" && (
@@ -61,7 +71,7 @@ const Index = () => {
           )}
           {activeTab === "nutrition" && (
             <TabsContent value="nutrition" className="pb-20">
-              <NutritionPlanner />
+              <NutritionPlanner readings={readings} />
             </TabsContent>
           )}
           {activeTab === "health" && (
@@ -87,21 +97,27 @@ const Index = () => {
             <TabsList className="grid grid-cols-4 w-full gap-1 p-2 bg-card">
               <TabsTrigger
                 value="dashboard"
-                className={`flex flex-col items-center py-2 text-xs ${activeTab === "dashboard" ? "text-green-600" : "text-gray-500"}`}
+                className={`flex flex-col items-center py-2 text-xs ${
+                  activeTab === "dashboard" ? "text-green-600" : "text-gray-500"
+                }`}
               >
                 <Activity className="h-4 w-4" />
                 Dashboard
               </TabsTrigger>
               <TabsTrigger
                 value="graphs"
-                className={`flex flex-col items-center py-2 text-xs ${activeTab === "graphs" ? "text-green-600" : "text-gray-500"}`}
+                className={`flex flex-col items-center py-2 text-xs ${
+                  activeTab === "graphs" ? "text-green-600" : "text-gray-500"
+                }`}
               >
                 <TrendingUp className="h-4 w-4" />
                 Graphs
               </TabsTrigger>
               <TabsTrigger
                 value="phenology"
-                className={`flex flex-col items-center py-2 text-xs ${activeTab === "phenology" ? "text-green-600" : "text-gray-500"}`}
+                className={`flex flex-col items-center py-2 text-xs ${
+                  activeTab === "phenology" ? "text-green-600" : "text-gray-500"
+                }`}
               >
                 <Leaf className="h-4 w-4" />
                 Phenology
@@ -125,7 +141,11 @@ const Index = () => {
 
                 {/* --- EDITED SECTION: FIXED ALIGNMENT AND SIZE --- */}
                 <div
-                  className={`${showMore ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"} absolute bottom-full right-0 mb-2 w-max min-w-[120px] bg-white border border-gray-200 shadow-xl rounded-xl p-1 transition-all duration-200 origin-bottom-right`}
+                  className={`${
+                    showMore
+                      ? "opacity-100 scale-100"
+                      : "opacity-0 scale-95 pointer-events-none"
+                  } absolute bottom-full right-0 mb-2 w-max min-w-[120px] bg-white border border-gray-200 shadow-xl rounded-xl p-1 transition-all duration-200 origin-bottom-right`}
                 >
                   <TabsTrigger
                     value="nutrition"
@@ -140,7 +160,11 @@ const Index = () => {
                     }`}
                   >
                     <ClipboardList
-                      className={`h-4 w-4 flex-shrink-0 ${activeTab === "nutrition" ? "text-green-600" : "text-gray-600"}`}
+                      className={`h-4 w-4 flex-shrink-0 ${
+                        activeTab === "nutrition"
+                          ? "text-green-600"
+                          : "text-gray-600"
+                      }`}
                     />
                     <span className="whitespace-nowrap font-medium">
                       Nutrition
@@ -159,7 +183,11 @@ const Index = () => {
                     }`}
                   >
                     <Bell
-                      className={`h-4 w-4 flex-shrink-0 ${activeTab === "alerts" ? "text-green-600" : "text-gray-600"}`}
+                      className={`h-4 w-4 flex-shrink-0 ${
+                        activeTab === "alerts"
+                          ? "text-green-600"
+                          : "text-gray-600"
+                      }`}
                     />
                     <span className="whitespace-nowrap font-medium">
                       Alerts
@@ -178,7 +206,11 @@ const Index = () => {
                     }`}
                   >
                     <MessageSquare
-                      className={`h-4 w-4 flex-shrink-0 ${activeTab === "chatbot" ? "text-green-600" : "text-gray-600"}`}
+                      className={`h-4 w-4 flex-shrink-0 ${
+                        activeTab === "chatbot"
+                          ? "text-green-600"
+                          : "text-gray-600"
+                      }`}
                     />
                     <span className="whitespace-nowrap font-medium">
                       AI Assistant
