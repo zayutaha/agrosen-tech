@@ -17,6 +17,8 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { Progress } from "@/components/ui/progress";
 
+const BASE_URL = import.meta.env.VITE_API_URL;
+
 interface SensorReading {
   nitrogen: number;
   phosphorus: number;
@@ -129,7 +131,7 @@ const Dashboard = ({ readings }: DashboardProps) => {
   };
   useEffect(() => {
     async function fetchRanges() {
-      const res = await fetch("http://localhost:8090/api/ranges");
+      const res = await fetch(`http://localhost:9000/api/ranges`);
 
       setRanges(await res.json());
     }
@@ -257,7 +259,9 @@ const Dashboard = ({ readings }: DashboardProps) => {
 
                 {/* Ideal Range Info */}
                 <p className="text-xs text-muted-foreground mt-1">
-                  Ideal: {ranges.nitrogen.low}–{ranges.nitrogen.high} ppm
+                  {ranges
+                    ? `Ideal: ${ranges.nitrogen.low}–{ranges.nitrogen.high} ppm}`
+                    : "Loading"}
                 </p>
 
                 {/* Status Badge with Better Labeling */}

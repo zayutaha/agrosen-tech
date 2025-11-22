@@ -18,6 +18,8 @@ import HealthScore from "@/components/HealthScore";
 import AlertsPanel from "@/components/AlertsPanel";
 import Chatbot from "@/components/Chatbot";
 
+const BASE_URL = import.meta.env.VITE_API_URL;
+
 const Index = () => {
   const [activeTab, setActiveTab] = useState("dashboard");
   const [showMore, setShowMore] = useState(false);
@@ -27,8 +29,8 @@ const Index = () => {
   }, []);
 
   const fetchReadings = async () => {
-    const response = await fetch("http://localhost:8090/api/reading").then(
-      (res) => res.json(),
+    const response = await fetch(`${BASE_URL}/api/reading`).then((res) =>
+      res.json(),
     );
     setReadings(response);
   };
