@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { supabase } from "@/integrations/supabase/client";
 import { Bell, AlertTriangle, Info, X, Activity } from "lucide-react";
+import Skeleton from "react-loading-skeleton";
 
 interface Alert {
   id: string;
@@ -88,8 +89,36 @@ const AlertsPanel = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-64">
-        <Activity className="h-8 w-8 animate-spin text-primary" />
+      <div className="space-y-6">
+        <div className="flex justify-between">
+          <div>
+            <Skeleton height={40} width={"300px"} />
+            <Skeleton width={"280px"} />
+          </div>
+
+          <div>
+            <Skeleton borderRadius={50} height={50} width={110} />
+          </div>
+        </div>
+        <Skeleton height={40} className="mt-6" />
+        <Skeleton height={134} className="mt-6" />
+        <Skeleton height={134} className="mt-6" />
+        <Skeleton height={134} className="mt-6" />
+        <Skeleton height={134} className="mt-6" />
+        <Skeleton height={134} className="mt-6" />
+        <Skeleton height={134} className="mt-6" />
+        <Skeleton height={134} className="mt-6" />
+        <Skeleton height={134} className="mt-6" />
+        <Skeleton height={134} className="mt-6" />
+        <Skeleton height={134} className="mt-6" />
+        <Skeleton height={134} className="mt-6" />
+        <Skeleton height={134} className="mt-6" />
+        <Skeleton height={134} className="mt-6" />
+        <Skeleton height={134} className="mt-6" />
+        <Skeleton height={134} className="mt-6" />
+        <Skeleton height={134} className="mt-6" />
+        <Skeleton height={134} className="mt-6" />
+        <Skeleton className="mt-6 h-[406px] md:h-[190px]" />
       </div>
     );
   }

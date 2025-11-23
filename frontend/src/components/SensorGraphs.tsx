@@ -1,8 +1,18 @@
 import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { supabase } from "@/integrations/supabase/client";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  Legend,
+} from "recharts";
 import { Activity } from "lucide-react";
+import Skeleton from "react-loading-skeleton";
 
 const SensorGraphs = () => {
   const [readings, setReadings] = useState<any[]>([]);
@@ -12,21 +22,21 @@ const SensorGraphs = () => {
     const fetchReadings = async () => {
       try {
         const { data, error } = await supabase
-          .from('sensor_readings')
-          .select('*')
-          .order('created_at', { ascending: true })
+          .from("sensor_readings")
+          .select("*")
+          .order("created_at", { ascending: true })
           .limit(50);
 
         if (error) throw error;
-        
-        const formattedData = (data || []).map(reading => ({
+
+        const formattedData = (data || []).map((reading) => ({
           ...reading,
-          time: new Date(reading.created_at).toLocaleTimeString()
+          time: new Date(reading.created_at).toLocaleTimeString(),
         }));
-        
+
         setReadings(formattedData);
       } catch (error) {
-        console.error('Error fetching readings:', error);
+        console.error("Error fetching readings:", error);
       } finally {
         setLoading(false);
       }
@@ -37,8 +47,20 @@ const SensorGraphs = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-64">
-        <Activity className="h-8 w-8 animate-spin text-primary" />
+      <div className="space-y-3">
+        <div>
+          <Skeleton height={40} />
+          <Skeleton />
+        </div>
+
+        <div className="flex flex-col gap-5">
+          <Skeleton width={"100%"} height={398} borderRadius={"12px"} />
+          <Skeleton width={"100%"} height={398} borderRadius={"12px"} />
+          <div className="grid gap-4 md:grid-cols-2">
+            <Skeleton width={"100%"} height={398} borderRadius={"12px"} />
+            <Skeleton width={"100%"} height={398} borderRadius={"12px"} />
+          </div>
+        </div>
       </div>
     );
   }
@@ -64,9 +86,24 @@ const SensorGraphs = () => {
                   <YAxis />
                   <Tooltip />
                   <Legend />
-                  <Line type="monotone" dataKey="nitrogen" stroke="hsl(var(--primary))" name="Nitrogen" />
-                  <Line type="monotone" dataKey="phosphorus" stroke="hsl(var(--secondary))" name="Phosphorus" />
-                  <Line type="monotone" dataKey="potassium" stroke="hsl(var(--dark-earth-green))" name="Potassium" />
+                  <Line
+                    type="monotone"
+                    dataKey="nitrogen"
+                    stroke="hsl(var(--primary))"
+                    name="Nitrogen"
+                  />
+                  <Line
+                    type="monotone"
+                    dataKey="phosphorus"
+                    stroke="hsl(var(--secondary))"
+                    name="Phosphorus"
+                  />
+                  <Line
+                    type="monotone"
+                    dataKey="potassium"
+                    stroke="hsl(var(--dark-earth-green))"
+                    name="Potassium"
+                  />
                 </LineChart>
               </ResponsiveContainer>
             </CardContent>
@@ -84,7 +121,12 @@ const SensorGraphs = () => {
                   <YAxis />
                   <Tooltip />
                   <Legend />
-                  <Line type="monotone" dataKey="moisture" stroke="hsl(var(--sky-blue))" name="Moisture" />
+                  <Line
+                    type="monotone"
+                    dataKey="moisture"
+                    stroke="hsl(var(--sky-blue))"
+                    name="Moisture"
+                  />
                 </LineChart>
               </ResponsiveContainer>
             </CardContent>
@@ -103,7 +145,12 @@ const SensorGraphs = () => {
                     <YAxis />
                     <Tooltip />
                     <Legend />
-                    <Line type="monotone" dataKey="temperature" stroke="hsl(var(--destructive))" name="Temp (°C)" />
+                    <Line
+                      type="monotone"
+                      dataKey="temperature"
+                      stroke="hsl(var(--destructive))"
+                      name="Temp (°C)"
+                    />
                   </LineChart>
                 </ResponsiveContainer>
               </CardContent>
@@ -121,7 +168,12 @@ const SensorGraphs = () => {
                     <YAxis />
                     <Tooltip />
                     <Legend />
-                    <Line type="monotone" dataKey="humidity" stroke="hsl(var(--accent))" name="Humidity (%)" />
+                    <Line
+                      type="monotone"
+                      dataKey="humidity"
+                      stroke="hsl(var(--accent))"
+                      name="Humidity (%)"
+                    />
                   </LineChart>
                 </ResponsiveContainer>
               </CardContent>
@@ -132,7 +184,8 @@ const SensorGraphs = () => {
         <Card>
           <CardContent className="pt-6">
             <p className="text-center text-muted-foreground">
-              No historical data available yet. Refresh the dashboard to collect data.
+              No historical data available yet. Refresh the dashboard to collect
+              data.
             </p>
           </CardContent>
         </Card>

@@ -17,7 +17,8 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { Progress } from "@/components/ui/progress";
 import { BASE_URL } from "@/lib/utils";
-
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 interface SensorReading {
   nitrogen: number;
   phosphorus: number;
@@ -100,6 +101,7 @@ const Dashboard = ({ readings }: DashboardProps) => {
   const [latestReading, setLatestReading] = useState<SensorReading | null>(
     null,
   );
+  const [healthData, setHealthData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [ranges, setRanges] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
@@ -124,8 +126,6 @@ const Dashboard = ({ readings }: DashboardProps) => {
       setLatestReading(data);
     } catch (error) {
       console.error("Error fetching data:", error);
-    } finally {
-      setLoading(false);
     }
   };
   useEffect(() => {
@@ -165,6 +165,7 @@ const Dashboard = ({ readings }: DashboardProps) => {
 
   useEffect(() => {
     fetchLatestReading();
+    fetchData();
 
     // Subscribe to realtime updates
     const channel = supabase
@@ -186,19 +187,82 @@ const Dashboard = ({ readings }: DashboardProps) => {
       supabase.removeChannel(channel);
     };
   }, []);
+  const fetchData = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("health_scores")
+        .select("*")
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .single();
+
+      if (error) throw error;
+      setHealthData(data);
+    } catch (error) {
+      console.error("Error:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-64">
-        <Activity className="h-8 w-8 animate-spin text-primary" />
-      </div>
+      <>
+        <Skeleton width={"100%"} height={"366px"}></Skeleton>
+        <div className="h-4"></div>
+        <Skeleton count={1} height={"30px"} />
+        <div className="h-4"></div>
+        <div className="flex flex-col gap-2">
+          <div className="grid gap-2 md:grid-cols-3">
+            <Skeleton
+              className="w-full"
+              height={"184px"}
+              borderRadius={"12px"}
+            />
+            <Skeleton
+              className="w-full"
+              height={"184px"}
+              borderRadius={"12px"}
+            />
+            <Skeleton
+              className="w-full"
+              height={"184px"}
+              borderRadius={"12px"}
+            />
+          </div>
+          <div className="grid gap-2 md:grid-cols-3">
+            <Skeleton
+              className="w-full"
+              height={"184px"}
+              borderRadius={"12px"}
+            />
+            <Skeleton
+              className="w-full"
+              height={"184px"}
+              borderRadius={"12px"}
+            />
+            <Skeleton
+              className="w-full"
+              height={"184px"}
+              borderRadius={"12px"}
+            />
+          </div>
+          <div className="grid gap-2 md:grid-cols-3">
+            <Skeleton
+              className="md:w-[450px] w-full"
+              height={"184px"}
+              borderRadius={"12px"}
+            />
+          </div>
+        </div>
+      </>
     );
   }
 
   return (
     <div className="space-y-4">
       {/* Health Score Card on Top */}
-      <HealthScore />
+      <HealthScore healthData={healthData} />
       {/* Electrical Conductivity Card */}
       {/* Refresh Button */}
       <div className="flex justify-between items-center">

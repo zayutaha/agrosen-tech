@@ -8,41 +8,9 @@ import {
   TrendingDown,
   AlertTriangle,
 } from "lucide-react";
+import Skeleton from "react-loading-skeleton";
 
-const HealthScore = () => {
-  const [healthData, setHealthData] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const { data, error } = await supabase
-          .from("health_scores")
-          .select("*")
-          .order("created_at", { ascending: false })
-          .limit(1)
-          .single();
-
-        if (error) throw error;
-        setHealthData(data);
-      } catch (error) {
-        console.error("Error:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center h-64">
-        <Activity className="h-8 w-8 animate-spin text-primary" />
-      </div>
-    );
-  }
-
+const HealthScore = ({ healthData }: any) => {
   if (!healthData) {
     return (
       <Card>
@@ -155,7 +123,9 @@ const HealthScore = () => {
                 style={{ left: "70%", width: "15%" }}
               />
               <div
-                className={`h-full bg-gradient-to-r ${getScoreGradient(healthData.score)} transition-all relative z-10`}
+                className={`h-full bg-gradient-to-r ${getScoreGradient(
+                  healthData.score,
+                )} transition-all relative z-10`}
                 style={{ width: `${healthData.score}%` }}
               />
             </div>

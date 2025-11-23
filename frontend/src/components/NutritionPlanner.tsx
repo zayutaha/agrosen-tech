@@ -7,6 +7,7 @@ import {
   AlertTriangle,
 } from "lucide-react";
 import { Readings } from "./Dashboard";
+import Skeleton from "react-loading-skeleton";
 
 // ============================================================================
 // MOCKS FOR SHADCN COMPONENTS (Card, Badge) and SUPABASE/FIREBASE
@@ -125,9 +126,8 @@ const NutritionPlanner = ({ readings }: NutritionPlannerProps) => {
 
   if (loading) {
     return (
-      <div className="flex flex-col items-center justify-center h-64 bg-white rounded-xl shadow-lg">
-        <Activity className="h-8 w-8 animate-spin text-green-600" />
-        <p className="mt-4 text-sm text-gray-500">Loading sensor data...</p>
+      <div className="flex justify-center w-full">
+        <Skeleton className="space-y-6 w-[512px] max-w-[90vw] rounded-xl min-h-screen"></Skeleton>
       </div>
     );
   }
