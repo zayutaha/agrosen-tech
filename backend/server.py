@@ -22,7 +22,10 @@ def get_reading():
         "nitrogen": reading.nitrogen,
         "phosphorus": reading.phosphorus,
         "potassium": reading.potassium,
-        "soil_moisture": reading.soil_moisture
+        "soil_moisture": reading.soil_moisture,
+        "temperature": "25",
+        "humidity": "12",
+        "electrical_conductivity": "1.25",
     })
 
 @app.route('/api/season')
@@ -46,6 +49,9 @@ def get_ranges():
         "potassium": POTASSIUM,
         "phosphorus": PHOSPHORUS,
         "soil_moisture": SOIL_MOISTURE,
+        "temperature": TEMPERATURE,
+        "humidity": HUMIDITY,
+        "electrical_conductivity": ELECTRICAL_CONDUCTIVITY,
     })
 
 
