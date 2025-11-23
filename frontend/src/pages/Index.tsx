@@ -17,8 +17,7 @@ import NutritionPlanner from "@/components/NutritionPlanner";
 import HealthScore from "@/components/HealthScore";
 import AlertsPanel from "@/components/AlertsPanel";
 import Chatbot from "@/components/Chatbot";
-
-const BASE_URL = import.meta.env.VITE_API_URL;
+import { BASE_URL } from "@/lib/utils";
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState("dashboard");

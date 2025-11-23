@@ -16,8 +16,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { Progress } from "@/components/ui/progress";
-
-const BASE_URL = import.meta.env.VITE_API_URL;
+import { BASE_URL } from "@/lib/utils";
 
 interface SensorReading {
   nitrogen: number;
@@ -131,7 +130,7 @@ const Dashboard = ({ readings }: DashboardProps) => {
   };
   useEffect(() => {
     async function fetchRanges() {
-      const res = await fetch(`http://localhost:9000/api/ranges`);
+      const res = await fetch(`${BASE_URL}/api/ranges`);
 
       setRanges(await res.json());
     }
