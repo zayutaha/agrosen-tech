@@ -92,6 +92,14 @@ export type Readings = {
   potassium: number;
   soil_moisture: number;
 };
+
+type Range = {
+  substance: string;
+  low: number;
+  high: number;
+  unit: string;
+};
+
 type DashboardProps = {
   readings: Readings;
 };
@@ -101,7 +109,7 @@ const Dashboard = ({ readings }: DashboardProps) => {
     null,
   );
   const [loading, setLoading] = useState(true);
-  const [ranges, setRanges] = useState(null);
+  const [ranges, setRanges] = useState<Range[]>([]);
   const [refreshing, setRefreshing] = useState(false);
   const { toast } = useToast();
 

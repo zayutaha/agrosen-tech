@@ -42,9 +42,10 @@ def get_season():
 @app.route('/api/ranges')
 def get_ranges():
     return jsonify({
-        "nitrogen": NITROGEN_RANGE,
-        "potassium": POTASSIUM_RANGE,
-        "phosphorus": PHOSPHORUS_RANGE,
+        "nitrogen": NITROGEN,
+        "potassium": POTASSIUM,
+        "phosphorus": PHOSPHORUS,
+        "soil_moisture": SOIL_MOISTURE,
     })
 
 
